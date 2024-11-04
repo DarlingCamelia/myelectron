@@ -1,0 +1,181 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List</title>
+    <link rel="stylesheet" href="grocery_list.css"> <!-- Include your CSS file if needed 
+</head>
+<body>
+    <h2>Grocery List</h2>
+    
+    <div id="recipe-container" style="display: none;">
+        <h3 id="recipe-name"></h3>
+        <img id="recipe-image" src="" alt="" style="max-width: 200px; display: none;">
+        <div id="recipe-ingredients"></div>
+    </div>
+
+    <input type="text" id="ingredient-input" placeholder="Add an ingredient">
+    <button id="add-ingredient-button">Add Ingredient</button>
+    <div id="ingredients-container"></div>
+    
+    <script src="grocery_list.js"></script>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List</title>
+    <link rel="stylesheet" href="grocery_list.css">
+</head>
+<body>
+    <header>
+    <h1>Grocery List</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search_result.html">Search</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="meal_planner.html">Meal Planner</a>
+        <a href="grocery_list.html">Grocery List</a>
+    </nav>
+    <div id="grocery-list"></div>
+    <button id="back-button"><a href="meal_planner.html">Back</a></button>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>We are dedicated to providing the best meal finding experience. Our mission is to make your finding recipe seamless and enjoyable.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> mealfinder@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +6011-1567940</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul class="quick-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2024 Meal Finder. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const ingredientsContainer = document.getElementById('ingredients-container');
+    const groceryListContainer = document.getElementById('grocery-list');
+    const ingredientInput = document.getElementById('ingredient-input');
+    const addIngredientButton = document.getElementById('add-ingredient-button');
+
+    // Retrieve the selected recipe from local storage
+    const selectedRecipeData = JSON.parse(localStorage.getItem('selectedRecipe'));
+
+    if (!selectedRecipeData) {
+        groceryListContainer.innerHTML = '<p>No recipe selected. Please go back and select a recipe.</p>';
+        return;
+    }
+
+    const { name, ingredients } = selectedRecipeData;
+
+    // Prepare the grocery list
+    const ingredientsList = ingredients.split('</li>').map(item => item.replace(/<li>/g, '').trim()).filter(item => item);
+
+    if (ingredientsList.length === 0) {
+        groceryListContainer.innerHTML = '<p>No ingredients found for this recipe.</p>';
+        return;
+    }
+
+    // Load saved grocery list from local storage
+    const savedGroceryList = JSON.parse(localStorage.getItem('groceryList')) || [];
+
+    // Generate grocery list HTML
+    let groceryListHTML = `<h2>Grocery List for ${name}</h2><ul>`;
+    
+    ingredientsList.forEach(ingredient => {
+        const savedItem = savedGroceryList.find(item => item.text === ingredient);
+        const isChecked = savedItem ? savedItem.checked : false; // Check if the item was previously saved
+
+        groceryListHTML += `
+            <li>
+                <input type="checkbox" onchange="updateCheckboxText(this)" ${isChecked ? 'checked' : ''}>
+                <span style="${isChecked ? 'text-decoration: line-through;' : ''}">${ingredient}</span>
+            </li>`;
+    });
+    groceryListHTML += '</ul>';
+
+    groceryListContainer.innerHTML = groceryListHTML;
+
+    // Function to update the checkbox text when checked/unchecked
+    window.updateCheckboxText = (checkbox) => {
+        const span = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            span.style.textDecoration = "line-through"; // Strike-through if checked
+        } else {
+            span.style.textDecoration = "none"; // Remove strike-through if unchecked
+        }
+        saveGroceryList(); // Save the current state to local storage
+    };
+
+    // Function to save the grocery list to local storage
+    function saveGroceryList() {
+        const groceryListItems = groceryListContainer.querySelectorAll('li');
+        const groceryListData = [];
+
+        groceryListItems.forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            const span = item.querySelector('span');
+            groceryListData.push({
+                text: span.innerText,
+                checked: checkbox.checked
+            });
+        });
+
+        localStorage.setItem('groceryList', JSON.stringify(groceryListData));
+    }
+
+    // Add ingredient functionality
+    addIngredientButton.addEventListener('click', () => {
+        const ingredientText = ingredientInput.value.trim();
+        if (ingredientText) {
+            const ingredientElement = createIngredientElement(ingredientText);
+            ingredientsContainer.appendChild(ingredientElement);
+            ingredientInput.value = ''; // Clear the input
+            saveGroceryList(); // Save the updated list
+        }
+    });
+
+    // Function to create a new ingredient element
+    const createIngredientElement = (ingredientText) => {
+        const ingredientDiv = document.createElement('div');
+        ingredientDiv.classList.add('ingredient');
+        ingredientDiv.innerHTML = `
+            <input type="checkbox" onchange="updateCheckboxText(this)">
+            <span>${ingredientText}</span>
+            <button class="delete-button">Delete</button>
+        `;
+
+        // Add event listener for the delete button
+        const deleteButton = ingredientDiv.querySelector('.delete-button');
+        deleteButton.addEventListener('click', () => {
+            ingredientsContainer.removeChild(ingredientDiv);
+            saveGroceryList(); // Save the updated list
+        });
+
+        return ingredientDiv;
+    };
+});
+    </script>
+</body>
+</html>

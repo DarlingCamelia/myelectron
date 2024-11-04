@@ -1,0 +1,339 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #faedcd;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    color: #ff9500;
+    background: #f5cb5c;
+    border-radius: 10px;
+    font-family: garamond;
+    font-size: 70px;
+    margin-top: -10px;
+    padding: 10px 10px;
+    padding-left: -20px;
+    margin-left: 300px;
+    margin-right: 300px;
+    
+}
+
+h1 {
+    text-align: center;
+    color: #f5cb5c;
+    font-family: garamond;
+    font-size: 50px;
+    margin-top: -10px;
+    padding: 10px 10px;
+    padding-left: -20px;
+    margin-left: 300px;
+    margin-right: 300px;
+    
+}
+
+header {
+    background-image: url('ramen.gif'); /* Replace with your image path */
+    background-size: cover; /* Make the background image cover the entire header */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    padding: 20px; /* Add some padding */
+    padding-top: 16%;
+    padding-bottom: 5%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: white; /* Change text color to white for better contrast */
+    height: 300px; /* Set a specific height for the header */
+}
+
+nav {
+    position: fixed; /* Fix the nav to the top */
+    top: 0; /* Align to the top */
+    left: 0;
+    right: 0;
+    background: #f5cb5c; /* Semi-transparent background */
+    padding: 10px 20px; /* Add padding */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    z-index: 1000; /* Ensure it stays above other content */
+    display: flex; /* Use Flexbox for layout */
+    justify-content: center; /* Center items */
+    align-items: center; /* Align items vertically */
+}
+
+nav ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Use Flexbox for the list */
+}
+
+nav li {
+    margin: 0 20px; /* Add spacing between items */
+}
+
+nav a {
+    color: #806443; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Lighten on hover */
+    transform: scale(1.05); /* Scale up on hover */
+}
+h3 {
+    color: #f5cb5c;
+    font-size: 15px;
+}
+
+h4 {
+    color: #f5cb5c;
+}
+
+p {
+    color: #806443;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    color: #806443;
+}
+
+button{
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5cb5c;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #ff9500;
+    color: #f5cb5c;
+}
+/* Add styles for favorites page */
+
+#favorites {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.recipe {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 10px;
+    background-color: #fefee3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    height: 30%;
+    text-align: center;
+    font-size: 10px;
+    display: flex;
+}
+
+.recipe img {
+    max-width: 45%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.recipe-content {
+    padding: 10px;
+    max-width: 60%;
+    height: 30%;
+    text-align: justify;
+    padding-left: 5%;
+}
+
+.recipe-content h3 {
+    margin-top: 0;
+}
+
+.recipe-content ul {
+    list-style: circle;
+    padding: 0;
+}
+
+.recipe-content li {
+    margin-bottom: 10px;
+}
+
+.delete-button {
+    background-color: #f5cb5c;
+    color: white;
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #f5ebe0;
+    color: #b2967d;
+    transition: background-color 0.3s;
+}
+
+.meal-planner {
+    margin-top: 6%;
+    margin-bottom: 10%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fefee3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.meal-planner h4 {
+    margin-top: 0;
+}
+
+.meal-planner select, .meal-planner input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.meal-planner button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f5cb5c;
+    color: white;
+    cursor: pointer;
+}
+
+.meal-planner button:hover {
+    background-color: #f5ebe0;
+    color: #b2967d;
+    transition: background-color 0.3s;
+}
+
+.meal-entry {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.meal-entry:last-child {
+    border-bottom: none;
+}
+
+.delete-meal-button {
+    background-color: #f5cb5c;
+    color: white;
+    border: none;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-meal-button:hover {
+    background-color: #f5ebe0;
+    color: #b2967d;
+    transition: background-color 0.3s;
+}
+
+.main-content {
+    flex: 1; /* Allow the main content to grow and fill space */
+}
+
+html, body {
+    height: 100%; /* Ensure the body takes full height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+body {
+
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.main-content {
+    flex: 1; /* Allow the main content to grow and fill space */
+    padding: 20px; /* Add some padding for content */
+}
+
+/* Footer styles */
+footer {
+    background-color: #fffcf2; /* Light grey background for a soft look */
+    color: #f5cb5c; /* Dark text color for contrast */
+    padding: 40px 0; /* Increased padding for a more spacious feel */
+    border-top: 2px solid #f5cb5c; /* Bold border at the top */
+    width: 100%; /* Make sure footer takes full width */
+    margin: 0; /* Remove any margin */
+}
+
+.footer-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between columns */
+    max-width: 1200px; /* Limit the width */
+    margin: 0 auto; /* Center the container */
+    padding: 0 20px; /* Padding for the sides */
+}
+
+.footer-column {
+    flex: 1; /* Each column takes equal space */
+    padding: 0 20px; /* Padding for the columns */
+}
+
+.footer-column p{
+    color: #f5cb5c;
+}
+
+.footer-column h4 {
+    margin-bottom: 15px; /* Space below headings */
+    font-size: 18px; /* Larger font size for headings */
+    color: #f5cb5c; /* Color for headings */
+}
+
+.contact-info {
+    font-size: 14px; /* Font size for contact info */
+}
+
+.contact-info p {
+    margin: 8px 0; /* Space between contact info lines */
+}
+
+.contact-info i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #f5cb5c; /* Color for icons */
+}
+
+.quick-links {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.quick-links li {
+    margin: 8px 0; /* Space between links */
+}
+
+.quick-links a {
+    color: #f5cb5c; /* Link color */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.quick-links a:hover {
+    color: #a98467; /* Change link color on hover */
+}
+
+.copyright {
+    text-align: left; /* Align copyright to the left */
+    margin-top: 20px; /* Space above copyright */
+    padding: 0 20px; /* Padding for sides */
+    font-size: 14px; /* Smaller font size for copyright */
+    color: #f5cb5c;
+}

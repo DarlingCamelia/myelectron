@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="meal_planner.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+<header>
+<h1>Meal Planner</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="search_result.html">Search</a>
+    <a href="favorites.html">Favorites</a>
+    <a href="meal_planner.html">Meal Planner</a>
+    <a href="grocery_list.html">Grocery List</a>
+</nav>
+
+<div id="meal-planner">
+    <div class="meal-type" id="breakfast">
+        <h2>Breakfast</h2>
+        <div class="meals"></div>
+    </div>
+    <div class="meal-type" id="lunch">
+        <h2>Lunch</h2>
+        <div class="meals"></div>
+    </div>
+    <div class="meal-type" id="dinner">
+        <h2>Dinner</h2>
+        <div class="meals"></div>
+    </div>
+</div>
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>About Us</h4>
+            <p>We are dedicated to providing the best meal finding experience. Our mission is to make your finding recipe seamless and enjoyable.</p>
+        </div>
+        <div class="footer-column">
+            <h4>Contact Us</h4>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> mealfinder@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +6011-1567940</p>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul class="quick-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="copyright">&copy; 2024 Meal Finder. All rights reserved.</p>
+</footer>
+
+<!-- Link to the external JavaScript file -->
+<script>
+        const displayMeal = () => {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const mealTypes = ['breakfast', 'lunch', 'dinner'];
+
+        mealTypes.forEach(mealType => {
+            const mealsForType = favorites.flatMap(recipe => recipe.meals || []).filter(meal => meal.type === mealType);
+            const mealContainer = document.querySelector(`#${mealType} .meals`);
+
+            if (mealsForType.length > 0) {
+                mealsForType.forEach(meal => {
+                    const mealBox = document.createElement('div');
+                    mealBox.classList.add('meal-box');
+                    mealBox.innerHTML = `
+                        <img src="${meal.image}" alt="${meal.recipe}">
+                        <p>Recipe: ${meal.recipe}</p>
+                        <p>Date: ${meal.date}</p>
+                        <button class="grocery-list-button" data-recipe="${meal.recipe}">Grocery List</button>
+                    `;
+                    mealContainer.appendChild(mealBox);
+                });
+            } else {
+                mealContainer.innerHTML = `<p>No meal planned for this type.</p>`;
+            }
+        });
+
+        // Add event listener to all grocery list buttons
+        const groceryListButtons = document.querySelectorAll('.grocery-list-button');
+        groceryListButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const recipeName = e.target.getAttribute('data-recipe');
+                const selectedRecipe = favorites.find(recipe => recipe.meals.some(meal => meal.recipe === recipeName));
+
+                if (selectedRecipe) {
+                    // Store selected recipe name and ingredients in local storage
+                    localStorage.setItem('selectedRecipe', JSON.stringify({
+                        name: recipeName,
+                        ingredients: selectedRecipe.ingredients // Assuming ingredients are stored as a property of the recipe
+                    }));
+                }
+
+                window.location.href = 'grocery_list.html'; // Redirect to grocery list page
+            });
+        });
+    };
+
+    // Display the meal when the page loads
+    window.onload = displayMeal;
+</script>
+
+</body>
+</html>

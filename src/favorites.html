@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites</title>
+    <link rel="stylesheet" href="favorites.css">
+
+</head>
+<body>
+
+    <header>
+        <h1 class="title">My Favorite Recipes</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="search_result.html">Search</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="meal_planner.html">Meal Planner</a>
+        <a href="grocery_list.html">Grocery List</a>
+    </nav>
+
+    <div class="main-content">
+        <div id="favorites"></div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>We are dedicated to providing the best meal finding experience. Our mission is to make your finding recipe seamless and enjoyable.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> mealfinder@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +6011-1567940</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul class="quick-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2024 Meal Finder. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const favoritesContainer = document.getElementById('favorites');
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            const renderFavorites = () => {
+                favoritesContainer.innerHTML = ''; // Clear the container
+                if (favorites.length === 0) {
+                    favoritesContainer.innerHTML = '<p>No favorite recipes found.</p>';
+                } else {
+                    favorites.forEach((fav, index) => {
+                        const recipeDiv = document.createElement('div');
+                        recipeDiv.classList.add('recipe');
+                        recipeDiv.innerHTML = `
+                            <img src="${fav.image}" alt="${fav.name}">
+                            <div class="recipe-content">
+                                <h3>${fav.name}</h3>
+                                <p>Category: ${fav.category}</p>
+                                <p>Youtube Resource: <a href="${fav.youtube}" target="_blank">${fav.youtube}</a></p>
+                                <h4>Ingredients:</h4>
+                                <ul>${fav.ingredients}</ul>
+                                <h3>Instructions</h3>
+                                <p>${fav.instructions}</p>
+                                <button class="delete-button" data-index="${index}">Delete</button>
+                            </div>
+                        `;
+                        favoritesContainer.appendChild(recipeDiv);
+                    });
+
+                    // Create a single meal planner section outside of the recipe boxes
+                    const mealPlannerDiv = document.createElement('div');
+                    mealPlannerDiv.classList.add('meal-planner');
+                    mealPlannerDiv.innerHTML = `
+                        <h4>Meal Planner</h4>
+                        <select class="recipe-select">
+                            <option value="">Select a recipe</option>
+                            ${favorites.map(recipe => `<option value="${recipe.name}">${recipe.name}</option>`).join('')}
+                        </select>
+                        <input type="date" class="meal-date" />
+                        <select class="meal-type" required>
+                            <option value="">Select a Meal Type</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                        </select >
+                        <button class="add-meal-button">Add Meal</button>
+                        <div class="planner-container"></div>
+                        
+                    `;
+                    
+                    favoritesContainer.appendChild(mealPlannerDiv); // Append the single meal planner
+
+                    // Render existing meals for all recipes
+                    renderAllMealEntries(mealPlannerDiv);
+
+                    // Add event listeners to delete buttons
+                    document.querySelectorAll('.delete-button').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const index = e.target.getAttribute('data-index');
+                            favorites.splice(index, 1); // Remove the recipe from the array
+                            localStorage.setItem('favorites', JSON.stringify(favorites)); // Update localStorage
+                            renderFavorites(); // Re-render the favorites
+                        });
+                    });
+
+                    // Initialize the meal planner
+                    initializeMealPlanner(mealPlannerDiv);
+                }
+            };
+
+            const renderAllMealEntries = (mealPlannerDiv) => {
+                const plannerContainer = mealPlannerDiv.querySelector('.planner-container');
+                plannerContainer.innerHTML = ''; // Clear previous meal entries
+
+                favorites.forEach(fav => {
+                    if (fav.meals) {
+                        fav.meals.forEach(meal => {
+                            const mealEntry = document.createElement('div');
+                            mealEntry.classList.add('meal-entry');
+                            mealEntry.innerHTML = `
+                                <p>${meal.type.charAt(0).toUpperCase() + meal.type.slice(1)}: ${meal.recipe} on ${meal.date}</p>
+                                <button class="delete-meal-button">Delete</button>
+                            `;
+                            plannerContainer.appendChild(mealEntry);
+
+                            // Add event listener for delete button
+                            mealEntry.querySelector('.delete-meal-button').addEventListener('click', () => {
+                                const index = favorites.indexOf(fav);
+                                const mealIndex = fav.meals.indexOf(meal);
+                                if (mealIndex > -1) {
+                                    fav.meals.splice(mealIndex, 1); // Remove the meal from the array
+                                    localStorage.setItem('favorites', JSON.stringify(favorites)); // Update localStorage
+                                    renderAllMealEntries(mealPlannerDiv); // Re-render the meals
+                                }
+                            });
+                        });
+                    }
+                });
+            };
+
+            const initializeMealPlanner = (mealPlannerDiv) => {
+                const recipeSelect = mealPlannerDiv.querySelector('.recipe-select');
+                const mealDateInput = mealPlannerDiv.querySelector('.meal-date');
+                const mealTypeSelect = mealPlannerDiv.querySelector('.meal-type');
+                const addMealButton = mealPlannerDiv.querySelector('.add-meal-button');
+
+                addMealButton.addEventListener('click', () => {
+                    const selectedRecipeName = recipeSelect.value;
+                    const selectedDate = mealDateInput.value;
+                    const selectedType = mealTypeSelect.value;
+
+                    if (selectedRecipeName && selectedDate && selectedType) {
+                        // Find the selected recipe in favorites
+                        const selectedRecipe = favorites.find(recipe => recipe.name === selectedRecipeName);
+                        
+                        // If the recipe exists, add the meal
+                        if (selectedRecipe) {
+                            const newMeal = {
+                                type: selectedType,
+                                recipe: selectedRecipeName,
+                                date: selectedDate,
+                                image: selectedRecipe.image // Store the recipe image with the meal
+                            };
+
+                            // If meals array doesn't exist, create it
+                            if (!selectedRecipe.meals) {
+                                selectedRecipe.meals = [];
+                            }
+                            selectedRecipe.meals.push(newMeal); // Add the new meal to the recipe's meals array
+
+                            // Update localStorage
+                            localStorage.setItem('favorites', JSON.stringify(favorites));
+                            
+                            // Clear the input fields
+                            mealDateInput.value = '';
+                            recipeSelect.value = '';
+                            
+                            // Re-render the meal entries
+                            renderAllMealEntries(mealPlannerDiv);
+                        }
+                    } else {
+                        alert('Please select a recipe, date, and meal type.');
+                    }
+                });
+            };
+
+            renderFavorites(); // Initial render of favorites
+        });
+    </script>
+</body>
+</html>

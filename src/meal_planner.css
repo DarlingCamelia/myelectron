@@ -1,0 +1,229 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fef4eb;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+.title {
+    text-align: center;
+    color: #eae2b7;
+    background: #c1121f;
+    border-radius: 10px;
+    font-family: garamond;
+    font-size: 70px;
+    margin-top: -10px;
+    padding: 10px 10px;
+    padding-left: -20px;
+    margin-left: 300px;
+    margin-right: 300px;
+    
+}
+
+h1 {
+    text-align: center;
+    color: #eae2b7;
+    background: #c1121f;
+    border-radius: 10px;
+    font-family: garamond;
+    font-size: 70px;
+    margin-top: -10px;
+    padding: 10px 10px;
+    padding-left: -20px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+header {
+    background-image: url('omelet.gif'); /* Replace with your image path */
+    background-size: cover; /* Make the background image cover the entire header */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    padding: 20px; /* Add some padding */
+    padding-top: 16%;
+    padding-bottom: 5%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: white; /* Change text color to white for better contrast */
+    height: 300px; /* Set a specific height for the header */
+}
+
+nav {
+    position: fixed; /* Fix the nav to the top */
+    top: 0; /* Align to the top */
+    left: 0;
+    right: 0;
+    background: #c1121f; /* Semi-transparent background */
+    padding: 10px 20px; /* Add padding */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    z-index: 1000; /* Ensure it stays above other content */
+    display: flex; /* Use Flexbox for layout */
+    justify-content: center; /* Center items */
+    align-items: center; /* Align items vertically */
+}
+
+nav ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Use Flexbox for the list */
+}
+
+nav li {
+    margin: 0 20px; /* Add spacing between items */
+}
+
+nav a {
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Lighten on hover */
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+/* Meal type styles */
+.meal-type {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Individual meal box styles */
+.meals {
+    display: flex; /* Use flexbox for horizontal alignment */
+    flex-wrap: wrap; /* Allow wrapping to the next line if necessary */
+    gap: 10px; /* Space between individual meal boxes */
+    justify-content: center;
+}
+
+.meal-box {
+    background-color: #ffffff; /* White background for individual meals */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    padding-left: 20px;
+    flex: 1 1 calc(24% - 10px); /* Allow 4 boxes per row, adjust as needed */
+    max-width: 180px; /* Minimum width for each meal box */
+    box-sizing: border-box; /* Include padding in width calculation */
+
+}
+
+/* Image styles */
+img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 10px; /* Slightly rounded corners for images */
+}
+
+/* Button styles */
+button {
+    background-color: #c1121f; /* Bootstrap success color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px; /* Space between button and content above */
+}
+
+button:hover {
+    background-color: #c1121f; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Paragraph styles */
+p {
+    margin: 5px 0; /* Consistent spacing for paragraphs */
+}
+
+html, body {
+    height: 100%; /* Ensure the body takes full height */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+body {
+
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.main-content {
+    flex: 1; /* Allow the main content to grow and fill space */
+    padding: 20px; /* Add some padding for content */
+}
+
+/* Footer styles */
+footer {
+    background-color: #fffcf2; /* Light grey background for a soft look */
+    color: #c1121f; /* Dark text color for contrast */
+    padding: 40px 0; /* Increased padding for a more spacious feel */
+    border-top: 2px solid #c1121f; /* Bold border at the top */
+    width: 100%; /* Make sure footer takes full width */
+    margin: 0; /* Remove any margin */
+}
+
+.footer-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between columns */
+    max-width: 1200px; /* Limit the width */
+    margin: 0 auto; /* Center the container */
+    padding: 0 20px; /* Padding for the sides */
+}
+
+.footer-column {
+    flex: 1; /* Each column takes equal space */
+    padding: 0 20px; /* Padding for the columns */
+}
+
+.footer-column h4 {
+    margin-bottom: 15px; /* Space below headings */
+    font-size: 18px; /* Larger font size for headings */
+    color: #c1121f; /* Color for headings */
+}
+
+.contact-info {
+    font-size: 14px; /* Font size for contact info */
+}
+
+.contact-info p {
+    margin: 8px 0; /* Space between contact info lines */
+}
+
+.contact-info i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #c1121f; /* Color for icons */
+}
+
+.quick-links {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+}
+
+.quick-links li {
+    margin: 8px 0; /* Space between links */
+}
+
+.quick-links a {
+    color: #c1121f; /* Link color */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.quick-links a:hover {
+    color: #c1121f; /* Change link color on hover */
+}
+
+.copyright {
+    text-align: left; /* Align copyright to the left */
+    margin-top: 20px; /* Space above copyright */
+    padding: 0 20px; /* Padding for sides */
+    font-size: 14px; /* Smaller font size for copyright */
+}
